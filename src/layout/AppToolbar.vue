@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import Toolbar from 'primevue/toolbar';
 import { useLayout } from '@/layout/composables/layout';
+import { useAuth } from '@/auth/authStatus';
+import UserPopover from '@/components/user/UserMenu.vue';
+import LoginButton from '@/components/user/LoginButton.vue';
 
 const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
+const { isLoggedIn } = useAuth();
+
 </script>
 
 <template>
@@ -17,8 +22,8 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
       </template>
       <template #end>
         <div class="flex items-center gap-2">
-            <Button label="Login" severity="contrast" size="small" />
-            <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
+            <LoginButton v-if="!isLoggedIn" />
+            <UserPopover v-else />
         </div>
       </template>
     </Toolbar>
