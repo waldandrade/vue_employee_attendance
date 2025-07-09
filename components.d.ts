@@ -12,10 +12,15 @@ declare module 'vue' {
     AttendanceList: typeof import('./src/components/attendance/AttendanceList.vue')['default']
     Avatar: typeof import('primevue/avatar')['default']
     Button: typeof import('primevue/button')['default']
+    Dialog: typeof import('primevue/dialog')['default']
+    Form: typeof import('@primevue/forms/form')['default']
     InputText: typeof import('primevue/inputtext')['default']
+    LoginButton: typeof import('./src/components/user/LoginButton.vue')['default']
+    Menu: typeof import('primevue/menu')['default']
     Message: typeof import('primevue/message')['default']
     Password: typeof import('primevue/password')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UserMenu: typeof import('./src/components/user/UserMenu.vue')['default']
   }
 }

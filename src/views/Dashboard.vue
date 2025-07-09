@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AttendanceForm from '@/components/attendance/AttendanceForm.vue';
 import AttendanceList from '@/components/attendance/AttendanceList.vue';
+
 </script>
 
 <template>
