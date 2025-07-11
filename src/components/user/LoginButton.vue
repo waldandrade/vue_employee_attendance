@@ -1,8 +1,8 @@
 
 <template>
     <div class="card flex justify-center">
-        <Button label="Entrar" size="small" @click="visible = true"/>
-        <Dialog v-model:visible="visible" modal header="Entrar" :style="{ width: '25rem' }">
+        <Button label="Entrar" size="small" variant="outlined" @click="loginFormVisible = true"/>
+        <Dialog v-model:visible="loginFormVisible" modal header="Entrar" :style="{ width: '25rem' }">
             <Form v-slot="$form" :initialValues @submit="login" class="flex flex-col gap-4 w-full">
               <span class="text-surface-500 dark:text-surface-400 block">Entre com e-mail e senha</span>
               <div class="flex flex-col gap-1">
@@ -18,7 +18,7 @@
                   </Message>
               </div>
               <div class="flex justify-end gap-2">
-                <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
+                <Button type="button" label="Cancel" severity="secondary" @click="loginFormVisible = false"></Button>
                 <Button type="submit" label="Submit" />
               </div>
             </Form>
@@ -29,7 +29,7 @@
 <script setup lang="ts">
   import { useAuth } from "@/auth/authStatus";
   import { ref } from "vue";
-  const { authByCredentials } = useAuth()
+  const { authByCredentials, loginFormVisible } = useAuth()
   
   const initialValues = ref({
     username: '',
@@ -40,5 +40,4 @@
     authByCredentials(data.username, data.password)
   }
 
-  const visible = ref(false);
 </script>

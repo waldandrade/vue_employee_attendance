@@ -5,7 +5,7 @@ import { useAuth } from '@/auth/authStatus';
 import UserPopover from '@/components/user/UserMenu.vue';
 import LoginButton from '@/components/user/LoginButton.vue';
 
-const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
+const { menuVisible } = useLayout();
 const { isLoggedIn } = useAuth();
 
 </script>
@@ -14,10 +14,7 @@ const { isLoggedIn } = useAuth();
     <Toolbar>
       <template #start>
         <div class="flex items-center gap-2">
-            <Button icon="pi pi-bars" variant="text" rounded @click="toggleMenu" />
-            <Button :icon="isDarkTheme ? 'pi pi-moon' : 'pi pi-sun'" variant="text" rounded @click="toggleDarkMode" aria-label="Theme"/>
-            <Button icon="pi pi-palette" variant="text" rounded aria-label="Pallete"/>
-            <Button icon="pi pi-ellipsis-v" variant="text" rounded aria-label="Options"/>
+            <Button icon="pi pi-bars" variant="text" rounded @click="menuVisible = true" />
         </div>
       </template>
       <template #end>
