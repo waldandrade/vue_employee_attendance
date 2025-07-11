@@ -26,13 +26,12 @@ const getStatusSeverity = (attendance: any) => {
 
 const getStatusLabel = (attendance: any) => {
     switch (attendance.status) {
-        case 'ENTERING':
+        case 'entering':
             return 'Entrando';
 
         default:
             return 'Saindo';
     }
-
 }
 
 onMounted(() => {

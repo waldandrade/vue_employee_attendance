@@ -8,8 +8,7 @@ import { Form } from '@primevue/forms';
   });
   
   const submit = async ({ values: data }: any) => {
-    console.log(data.date)
-    await push({ date: data.date, status: 'ENTERING' })
+    await push({ date: data.date, status: 'entering' })
   }
 
 </script>

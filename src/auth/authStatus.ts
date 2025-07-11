@@ -1,4 +1,4 @@
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import axios from 'axios';
 
 interface TAuthState {
@@ -7,6 +7,9 @@ interface TAuthState {
 const authState = reactive<TAuthState>({
     token: undefined,
 });
+
+const loginFormVisible = ref(false)
+const registerFormVisible = ref(false)
 
 export function useAuth() {
   const storageVal = window.localStorage.getItem('token');
@@ -25,6 +28,12 @@ export function useAuth() {
   const isLoggedIn = computed(() => {
     return !!authState.token
   });
+
+  const signUp = async (userData: any) => {
+    const url = new URL('user', import.meta.env.VITE_API_URL);
+    await axios.post(url.toString(), userData)
+    authByCredentials(userData.email, userData.password)
+  }
 
   const authByCredentials = async (username: string, password: string) => {
     const params = new URLSearchParams()
@@ -55,6 +64,9 @@ export function useAuth() {
     logoff,
     isLoggedIn,
     authByCredentials,
+    signUp,
     token: authState.token,
+    loginFormVisible,
+    registerFormVisible
   }
 }
