@@ -1,34 +1,28 @@
 <script setup lang="ts">
-  import { Form } from '@primevue/forms';
+  import { useSchedule } from '@/schedule/composibles/schedule';
+import { Form } from '@primevue/forms';
   import { ref } from 'vue';
-  import axios from 'axios';
+  const { push, date } = useSchedule()
   const initialValues = ref({
-    username: '',
-    password: '',
+    date: date,
   });
   
-  const login = async ({ values: data }: any) => {
-    const params = new URLSearchParams()
-    params.append("username", data.username)
-    params.append("password", data.password)
-
-    const url = new URL('login', import.meta.env.VITE_API_URL);
-    const response = await axios.post(url.toString(), params)
-    localStorage.setItem('token', response.data.access_token)
+  const submit = async ({ values: data }: any) => {
+    console.log(data.date)
+    await push({ date: data.date, status: 'ENTERING' })
   }
 
 </script>
 <template>
-  <Form v-slot="$form" :initialValues @submit="login" class="flex flex-col gap-4 w-full p-12">
+  <Form v-slot="$form" :initialValues @submit="submit" class="flex flex-col gap-4 w-full p-12">
       <div class="flex flex-col gap-1">
-          <InputText name="username" type="text" placeholder="Username" fluid />
-          <Message v-if="$form.username?.invalid" severity="error" size="small" variant="simple">{{ $form.username.error.message }}</Message>
+          {{  date?.toDateString()  }}
       </div>
       <div class="flex flex-col gap-1">
-          <Password name="password" placeholder="Password" :feedback="false" toggleMask fluid />
-          <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">
+          <DatePicker id="datepicker-timeonly" name="date" timeOnly fluid />
+          <Message v-if="$form.time?.invalid" severity="error" size="small" variant="simple">
               <ul class="my-0 px-4 flex flex-col gap-1">
-                  <li v-for="(error, index) of $form.password.errors" :key="index">{{ error.message }}</li>
+                  <li v-for="(error, index) of $form.time.errors" :key="index">{{ error.message }}</li>
               </ul>
           </Message>
       </div>
