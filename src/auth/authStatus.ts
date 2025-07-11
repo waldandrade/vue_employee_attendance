@@ -1,5 +1,6 @@
 import { computed, reactive, ref, watch } from 'vue';
 import axios from 'axios';
+import type { TUser } from './types';
 
 interface TAuthState {
   token: string | null | undefined
@@ -8,13 +9,21 @@ const authState = reactive<TAuthState>({
     token: undefined,
 });
 
+const user = ref<TUser | null>(null)
+const startUp = ref(true)
+
 const loginFormVisible = ref(false)
 const registerFormVisible = ref(false)
 
 export function useAuth() {
-  const storageVal = window.localStorage.getItem('token');
-  if (storageVal) {
-    authState.token = storageVal;
+  const loadProfile =async () => {
+    const url = new URL('user/profile', import.meta.env.VITE_API_URL);
+    try {
+      const response = await axios.get(url.toString(), { headers: { 'Authorization': `Bearer ${authState.token}` } })
+      user.value = response.data
+    } catch(e) {
+      user.value = null
+    }
   }
 
   const login = (newToken: string) => {
@@ -51,13 +60,28 @@ export function useAuth() {
       if (val.token !== undefined) {
         if (val.token === null) {
           localStorage.removeItem('token')
+          user.value = null
         } else {
           localStorage.setItem('token', val.token)
+          loadProfile()
         }
       }
     },
     { deep: true }
   )
+
+  const initUser = async () => {
+    const storageVal = window.localStorage.getItem('token');
+    if (storageVal) {
+      authState.token = storageVal;
+    }
+    await loadProfile()
+    startUp.value = false
+  }
+
+  if (startUp.value) {
+    initUser()
+  }
   
   return {
     login,
@@ -67,6 +91,8 @@ export function useAuth() {
     signUp,
     token: authState.token,
     loginFormVisible,
-    registerFormVisible
+    registerFormVisible,
+    user,
+    startUp
   }
 }
