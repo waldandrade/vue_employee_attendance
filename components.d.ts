@@ -12,7 +12,6 @@ declare module 'vue' {
     AttendanceList: typeof import('./src/components/attendance/AttendanceList.vue')['default']
     Avatar: typeof import('primevue/avatar')['default']
     Button: typeof import('primevue/button')['default']
-    copy: typeof import('./src/components/user/LoginButton copy.vue')['default']
     DatePicker: typeof import('primevue/datepicker')['default']
     Dialog: typeof import('primevue/dialog')['default']
     Drawer: typeof import('primevue/drawer')['default']
