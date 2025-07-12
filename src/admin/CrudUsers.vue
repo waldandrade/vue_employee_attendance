@@ -4,33 +4,16 @@ import Column from 'primevue/column';
 import { useUsers } from './composibles/users';
 import { Tag } from 'primevue';
 import { onMounted } from 'vue';
+import type { TUser } from '@/auth/types';
 const { users, get } = useUsers()
 
-const formatDate = (value: string) => {
-    return new Date(value).toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-    });
-}
-
-const getStatusSeverity = (attendance: any) => {
-    switch (attendance.status) {
-        case 'ENTERING':
-            return 'success';
+const getMethodLabel = (user: TUser) => {
+    switch (user.schedule_method) {
+        case 'six_hours_without_break':
+            return '6 horas';
 
         default:
-            return 'null';
-    }
-}
-
-const getStatusLabel = (attendance: any) => {
-    switch (attendance.status) {
-        case 'entering':
-            return 'Entrando';
-
-        default:
-            return 'Saindo';
+            return '8 horas';
     }
 }
 
@@ -42,5 +25,10 @@ onMounted(() => {
 <template>
   <DataTable :value="users" tableStyle="min-width: 50rem">
     <Column field="email" header="Email"></Column>
+    <Column field="schedule_method" header="Tipo de jornada">
+      <template #body="slotProps">
+        <Tag :value="getMethodLabel(slotProps.data)" severity="contrast" />
+      </template>
+    </Column>
   </DataTable>
 </template>
