@@ -16,8 +16,8 @@ jobs:
       - run: |-
           echo VITE_API_URL=${{ secrets.VITE_API_URL }} >> .env.local
       - run: yarn install --frozen-lockfile && yarn build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMPLOYEEATTENDANCE_E33D8 }}
-          projectId: employeeattendance-e33d8
+#      - uses: FirebaseExtended/action-hosting-deploy@v0
+#        with:
+#          repoToken: ${{ secrets.GITHUB_TOKEN }}
+#          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMPLOYEEATTENDANCE_E33D8 }}
+#          projectId: employeeattendance-e33d8
